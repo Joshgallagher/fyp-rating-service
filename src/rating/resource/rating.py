@@ -1,9 +1,12 @@
 from flask import request
-from rating.model.rating import Rating
 from flask_restful import Resource
+from rating.model.rating import Rating
+from middleware.user_id_header import user_id_header
 
 
 class RatingsResource(Resource):
+    method_decorators = {'post': [user_id_header]}
+
     def get(self, id):
         rating = Rating.objects(articleId=id).count()
         return {'rating': int(rating)}, 200
