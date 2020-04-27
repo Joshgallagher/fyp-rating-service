@@ -1,27 +1,17 @@
-from flask import Flask, request, Response
+from flask import Flask
 from core.database import init_connection
-from rating.model.rating import Rating
+from flask_restful import Api
+from core.routes import init_routes
 
 app = Flask(__name__)
+api = Api(app)
+
 app.config['MONGODB_SETTINGS'] = {
     'host': 'mongodb://root:example@rating-service-db:27017/rating?authSource=admin'
 }
+
 init_connection(app)
-
-
-@app.route('/<article>', methods=['GET'])
-def get(article):
-    rating = Rating.objects(articleId=article).count()
-    return {'rating': int(rating)}, 200
-
-
-@app.route('/', methods=['POST'])
-def create():
-    body = request.get_json()
-    rating = Rating(**body).save()
-    id = rating.id
-    return {'id': str(id)}, 201
-
+init_routes(api)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
