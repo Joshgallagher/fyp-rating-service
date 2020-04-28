@@ -10,11 +10,26 @@ class RatingsResource(Resource):
     method_decorators = {'post': [get_subject]}
 
     def get(self, id):
-        rating = Rating.objects(articleId=id).count()
+        rating = Rating.objects(article_id=id).count()
         return {'rating': int(rating)}, 200
 
     def post(self, id):
-        userId = g.current_user_id
-        rating = Rating(userId=userId, articleId=id).save()
-        id = rating.id
-        return {'id': str(id)}, 201
+        user_id = g.current_user_id
+        count = Rating.objects(user_id=user_id, article_id=id).count()
+        if count == 50:
+            return {
+                'message':
+                    'You have given this article the maximum rating possible'
+            }, 403
+        Rating(user_id=user_id, article_id=id).save()
+        return {'rated': True}, 201
+
+
+class UserArticleRatingResource(Resource):
+    # method_decorators = [authorise, get_subject]
+    method_decorators = [get_subject]
+
+    def get(self, id):
+        user_id = g.current_user_id
+        rating = Rating.objects(user_id=user_id, article_id=id).count()
+        return {'rating': int(rating)}, 200
