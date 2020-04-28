@@ -1,6 +1,9 @@
+from datetime import datetime
 from core.database import database
 
 
 class Rating(database.Document):
-    userId = database.UUIDField(binary=False, required=True)
-    articleId = database.IntField(required=True)
+    user_id = database.UUIDField(binary=False, required=True)
+    article_id = database.IntField(required=True)
+    created_at = database.DateTimeField(
+        required=True, default=datetime.now())
