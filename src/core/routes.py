@@ -1,6 +1,7 @@
-from rating.resource.rating import RatingsResource, UserArticleRatingResource
+from rating.resource.rating import RatingResource
+from rating.resource.user_article_rating import UserArticleRatingResource
 
 
 def init_routes(api):
-    api.add_resource(RatingsResource, '/ratings/<int:id>')
-    api.add_resource(UserArticleRatingResource, '/ratings/user/<int:id>')
+    api.add_resource(RatingResource, '/ratings/<int:id>')
+    api.add_resource(UserArticleRatingResource, '/users/ratings/<int:id>')

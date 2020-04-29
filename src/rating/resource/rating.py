@@ -5,7 +5,7 @@ from middleware.get_subject import get_subject
 from middleware.authorise import authorise
 
 
-class RatingsResource(Resource):
+class RatingResource(Resource):
     method_decorators = {'post': [authorise, get_subject]}
 
     def get(self, id):
@@ -22,12 +22,3 @@ class RatingsResource(Resource):
             }, 403
         Rating(user_id=user_id, article_id=id).save()
         return {'rated': True}, 201
-
-
-class UserArticleRatingResource(Resource):
-    method_decorators = [authorise, get_subject]
-
-    def get(self, id):
-        user_id = g.current_user_id
-        rating = Rating.objects(user_id=user_id, article_id=id).count()
-        return {'rating': int(rating)}, 200
