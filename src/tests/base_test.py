@@ -6,6 +6,7 @@ from core.database import database
 class BaseTest(TestCase):
     def setUp(self):
         self.app = app.test_client()
+        self.app_context = app.app_context()
         self.database = database.get_db()
 
     def tearDown(self):
