@@ -9,5 +9,5 @@ class RatingTest(TestCase):
 
         rating = Rating(user_id=user_id, article_id=article_id)
 
-        self.assertEqual(rating.user_id, user_id)
+        self.assertEqual(str(rating.user_id), user_id)
         self.assertEqual(rating.article_id, article_id)
