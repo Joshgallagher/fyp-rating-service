@@ -2,12 +2,11 @@ from flask import g
 from flask_restful import Resource
 from rating.model.rating import Rating
 from middleware.get_subject import get_subject
-# from middleware.authorise import authorise
+from middleware.authorise import authorise
 
 
 class RatingsResource(Resource):
-    # method_decorators = {'post': [authorise, get_subject]}
-    method_decorators = {'post': [get_subject]}
+    method_decorators = {'post': [authorise, get_subject]}
 
     def get(self, id):
         rating = Rating.objects(article_id=id).count()
@@ -26,8 +25,7 @@ class RatingsResource(Resource):
 
 
 class UserArticleRatingResource(Resource):
-    # method_decorators = [authorise, get_subject]
-    method_decorators = [get_subject]
+    method_decorators = [authorise, get_subject]
 
     def get(self, id):
         user_id = g.current_user_id

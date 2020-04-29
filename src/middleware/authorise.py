@@ -1,23 +1,35 @@
-import requests
+import datetime
 
 from flask import request, abort
 from functools import wraps
-from authlib.jose import JsonWebKey, JWK_ALGORITHMS, jwt
+from authlib.jose import jwt
+from .get_jwk import get_jwk
+
+claims_options = {
+    'aud': {
+        'essential': True,
+        'values': ['vue']
+    },
+    'iss': {
+        'essential': True,
+        'values': ['http://127.0.0.1:4455/']
+    },
+    'sub': {
+        'essential': True
+    }
+}
 
 
 def authorise(f):
-    def get_and_load_jwk():
-        r = requests.get('http://oathkeeper-api:4456/.well-known/jwks.json')
-        key = r.json()['keys'][0]
-        jwk = JsonWebKey(algorithms=JWK_ALGORITHMS)
-        return jwk.loads(key)
-
     @wraps(f)
     def check(*args, **kwargs):
-        token = request.headers.get('Authorization').split(' ')[1]
-        jwk = get_and_load_jwk()
-        claims = jwt.decode(token, jwk)
-        if not claims.validate():
+        try:
+            token = request.headers.get('Authorization').split(' ')[1]
+            jwk = get_jwk()
+            claims = jwt.decode(token, jwk, claims_options=claims_options)
+            claims.validate(
+                now=datetime.datetime.now().timestamp(), leeway=600)
+        except Exception:
             abort(401)
         return f(*args, **kwargs)
     return check
