@@ -14,8 +14,7 @@ class RatingTest(IntegrationBaseTest):
 
         request = self.app.get('/ratings/{}'.format(article_id))
 
-        self.assertEqual(json.dumps(
-            {'rating': 1}), json.dumps(request.json))
+        self.assertEqual(json.dumps({'rating': 1}), json.dumps(request.json))
         self.assertEqual(200, request.status_code)
 
     def test_create_rating(self):
@@ -23,11 +22,11 @@ class RatingTest(IntegrationBaseTest):
             get_jwk.return_value = json.dumps(self.jwk)
 
             token = 'Bearer {}'.format(self.token)
-            article_id = 1
+            headers = {'Content-Type': 'application/json',
+                       'Authorization': token}
 
-            request = self.app.post(
-                '/ratings/{}'.format(article_id),
-                headers={'Authorization': token})
+            payload = json.dumps({'id': 1})
+            request = self.app.post('/ratings', headers=headers, data=payload)
 
             self.assertEqual(json.dumps(
                 {'rated': True}), json.dumps(request.json))

@@ -20,7 +20,7 @@ class UserArticleRatingTest(IntegrationBaseTest):
             Rating(user_id=other_user_id, article_id=article_id).save()
 
             request = self.app.get(
-                '/users/ratings/{}'.format(article_id),
+                '/ratings/{}/user'.format(article_id),
                 headers={'Authorization': token})
 
             self.assertEqual(json.dumps(
