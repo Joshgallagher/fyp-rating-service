@@ -6,6 +6,12 @@ from rating.model.rating import Rating
 
 
 class RatingTest(IntegrationBaseTest):
+    def setUp(self):
+        self.headers = {'Content-Type': 'application/json',
+                        'Authorization': 'Bearer {}'.format(self.token)}
+
+        super().setUp()
+
     def test_get_rating(self):
         article_id = 1
         user_id = self.token_subject
@@ -21,13 +27,32 @@ class RatingTest(IntegrationBaseTest):
         with patch('middleware.get_jwk.get_jwk') as get_jwk:
             get_jwk.return_value = json.dumps(self.jwk)
 
-            token = 'Bearer {}'.format(self.token)
-            headers = {'Content-Type': 'application/json',
-                       'Authorization': token}
-
-            payload = json.dumps({'id': 1})
-            request = self.app.post('/ratings', headers=headers, data=payload)
+            payload = json.dumps({'articleId': 1})
+            request = self.app.post(
+                '/ratings', headers=self.headers, data=payload)
 
             self.assertEqual(json.dumps(
                 {'rated': True}), json.dumps(request.json))
             self.assertEqual(201, request.status_code)
+
+    def test_create_rating_validation(self):
+        with patch('middleware.get_jwk.get_jwk') as get_jwk:
+            get_jwk.return_value = json.dumps(self.jwk)
+
+            payload = json.dumps({'articleId': 't'})
+            request = self.app.post(
+                '/ratings', headers=self.headers, data=payload)
+
+            self.assertEqual(json.dumps(
+                {'articleId': ['Not a valid integer.']}),
+                json.dumps(request.json))
+            self.assertEqual(422, request.status_code)
+
+            payload = json.dumps({'articleId': None})
+            request = self.app.post(
+                '/ratings', headers=self.headers, data=payload)
+
+            self.assertEqual(json.dumps(
+                {'articleId': ['Field may not be null.']}),
+                json.dumps(request.json))
+            self.assertEqual(422, request.status_code)
