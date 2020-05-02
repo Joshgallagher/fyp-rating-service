@@ -1,4 +1,3 @@
-import json
 from flask import g, request
 from flask_restful import Resource
 from rating.model.rating import Rating
