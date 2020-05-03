@@ -2,7 +2,7 @@ import json
 
 from tests.integration.integration_base_test import IntegrationBaseTest
 from unittest.mock import patch
-from rating.model.rating import Rating
+from src.rating.model.rating import Rating
 
 
 class RatingTest(IntegrationBaseTest):
@@ -24,7 +24,7 @@ class RatingTest(IntegrationBaseTest):
         self.assertEqual(200, request.status_code)
 
     def test_create_rating(self):
-        with patch('middleware.get_jwk.get_jwk') as get_jwk:
+        with patch('src.middleware.get_jwk.get_jwk') as get_jwk:
             get_jwk.return_value = json.dumps(self.jwk)
 
             payload = json.dumps({'articleId': 1})
@@ -36,7 +36,7 @@ class RatingTest(IntegrationBaseTest):
             self.assertEqual(201, request.status_code)
 
     def test_create_rating_validation(self):
-        with patch('middleware.get_jwk.get_jwk') as get_jwk:
+        with patch('src.middleware.get_jwk.get_jwk') as get_jwk:
             get_jwk.return_value = json.dumps(self.jwk)
 
             payload = json.dumps({'articleId': 't'})

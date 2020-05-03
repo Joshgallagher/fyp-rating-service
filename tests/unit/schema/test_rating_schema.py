@@ -1,6 +1,6 @@
 from unittest import TestCase
 from marshmallow import ValidationError
-from rating.schema.rating_schema import RatingSchema
+from src.rating.schema.rating_schema import RatingSchema
 
 
 class RatingTest(TestCase):

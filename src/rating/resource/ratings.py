@@ -1,6 +1,6 @@
 from flask import request
 from flask_restful import Resource
-from rating.model.rating import Rating
+from src.rating.model.rating import Rating
 
 
 class RatingsResource(Resource):

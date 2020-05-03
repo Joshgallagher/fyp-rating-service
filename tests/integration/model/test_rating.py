@@ -1,5 +1,5 @@
 from tests.integration.integration_base_test import IntegrationBaseTest
-from rating.model.rating import Rating
+from src.rating.model.rating import Rating
 
 
 class RatingTest(IntegrationBaseTest):
