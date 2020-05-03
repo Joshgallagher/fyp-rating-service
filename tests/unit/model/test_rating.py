@@ -1,5 +1,5 @@
 from unittest import TestCase
-from rating.model.rating import Rating
+from src.rating.model.rating import Rating
 
 
 class RatingTest(TestCase):

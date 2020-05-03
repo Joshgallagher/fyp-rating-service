@@ -1,6 +1,6 @@
 from unittest import TestCase
-from app import app
-from core.database import database
+from src import app
+from src.core.database import database
 
 
 class IntegrationBaseTest(TestCase):

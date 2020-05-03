@@ -2,12 +2,12 @@ import json
 
 from tests.integration.integration_base_test import IntegrationBaseTest
 from unittest.mock import patch
-from rating.model.rating import Rating
+from src.rating.model.rating import Rating
 
 
 class UserArticleRatingTest(IntegrationBaseTest):
     def test_get_user_article_rating(self):
-        with patch('middleware.get_jwk.get_jwk') as get_jwk:
+        with patch('src.middleware.get_jwk.get_jwk') as get_jwk:
             get_jwk.return_value = json.dumps(self.jwk)
 
             token = 'Bearer {}'.format(self.token)

@@ -1,9 +1,9 @@
 from flask import g, request
 from flask_restful import Resource
-from rating.model.rating import Rating
-from middleware.get_subject import get_subject
-from middleware.authorise import authorise
-from rating.schema.rating_schema import RatingSchema
+from src.rating.model.rating import Rating
+from src.middleware.get_subject import get_subject
+from src.middleware.authorise import authorise
+from src.rating.schema.rating_schema import RatingSchema
 from marshmallow import ValidationError
 
 

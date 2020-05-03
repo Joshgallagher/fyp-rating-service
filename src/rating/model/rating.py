@@ -1,5 +1,5 @@
 from datetime import datetime
-from core.database import database
+from src.core.database import database
 
 
 class Rating(database.Document):
