@@ -1,8 +1,8 @@
 from flask import Flask
 from flask_restful import Api
 from src.core.database import init_connection
-from src.core.routes import init_routes
-from src.core.config import configure_app
+from src.core.routes import register_routes
+from src.core.config import init_config
 
 
 def create_app(config_object=None):
@@ -12,9 +12,9 @@ def create_app(config_object=None):
     if config_object is not None:
         app.config.from_object(config_object)
     else:
-        configure_app(app)
+        init_config(app)
 
     init_connection(app)
-    init_routes(api)
+    register_routes(api)
 
     return app

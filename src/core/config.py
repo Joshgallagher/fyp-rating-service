@@ -40,6 +40,6 @@ config = {
 }
 
 
-def configure_app(app):
+def init_config(app):
     config_name = os.getenv('FLASK_ENV', 'default')
     app.config.from_object(config[config_name])
