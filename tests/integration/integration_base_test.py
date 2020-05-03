@@ -1,6 +1,7 @@
 from unittest import TestCase
-from src import app
+from src.app import create_app
 from src.core.database import database
+from src.core.config import config
 
 
 class IntegrationBaseTest(TestCase):
@@ -16,6 +17,9 @@ class IntegrationBaseTest(TestCase):
     token_subject = '854c9a9b-4a4a-410f-867c-9985c17878d8'
 
     def setUp(self):
+        database.disconnect()
+        app = create_app(config['testing'])
+
         self.app = app.test_client()
         self.app_context = app.app_context()
         self.database = database.get_db()
