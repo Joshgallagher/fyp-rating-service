@@ -3,7 +3,7 @@ from marshmallow import ValidationError
 from src.rating.schema.rating_schema import RatingSchema
 
 
-class RatingTest(TestCase):
+class RatingSchemaTest(TestCase):
     def test_rating_schema_validation_pass(self):
         article_id = 1
 

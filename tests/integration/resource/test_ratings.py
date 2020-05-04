@@ -5,7 +5,7 @@ from unittest.mock import patch
 from src.rating.model.rating import Rating
 
 
-class RatingTest(IntegrationBaseTest):
+class RatingsTest(IntegrationBaseTest):
     def setUp(self):
         self.headers = {'Content-Type': 'application/json',
                         'Authorization': 'Bearer {}'.format(self.token)}
