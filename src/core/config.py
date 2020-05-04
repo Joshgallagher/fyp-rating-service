@@ -5,6 +5,8 @@ class BaseConfig(object):
     DEBUG = False
     TESTING = False
 
+    JWT_LEEWAY = 600
+
 
 class ProductionConfig(BaseConfig):
     DEBUG = False
@@ -17,8 +19,12 @@ class DevelopmentConfig(BaseConfig):
     TESTING = False
     ENV = 'development'
 
+    JWT_ISSUER = 'http://127.0.0.1:4455/'
+    JWT_AUDIENCE = 'vue'
+    JWKS_URL = 'http://oathkeeper-api:4456'
+
     MONGODB_SETTINGS = {
-        'host': 'mongodb://root:example@rating-service-db:27017/rating?authSource=admin'
+        'host': 'mongodb://root:example@comment-service-db:27017/comment?authSource=admin'
     }
 
 
@@ -27,8 +33,12 @@ class TestingConfig(BaseConfig):
     TESTING = True
     ENV = 'testing'
 
+    JWT_ISSUER = 'http://127.0.0.1:4455/'
+    JWT_AUDIENCE = 'vue'
+    JWKS_URL = 'http://oathkeeper-api:4456'
+
     MONGODB_SETTINGS = {
-        'host': 'mongodb://root:example@rating-service-db:27017/rating-test?authSource=admin'
+        'host': 'mongodb://root:example@comment-service-db:27017/comment-test?authSource=admin'
     }
 
 
