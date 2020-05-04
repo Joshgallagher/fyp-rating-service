@@ -24,7 +24,7 @@ class DevelopmentConfig(BaseConfig):
     JWKS_URL = 'http://oathkeeper-api:4456'
 
     MONGODB_SETTINGS = {
-        'host': 'mongodb://root:example@comment-service-db:27017/comment?authSource=admin'
+        'host': 'mongodb://root:example@rating-service-db:27017/rating?authSource=admin'
     }
 
 
@@ -38,7 +38,7 @@ class TestingConfig(BaseConfig):
     JWKS_URL = 'http://oathkeeper-api:4456'
 
     MONGODB_SETTINGS = {
-        'host': 'mongodb://root:example@comment-service-db:27017/comment-test?authSource=admin'
+        'host': 'mongodb://root:example@rating-service-db:27017/rating-test?authSource=admin'
     }
 
 
